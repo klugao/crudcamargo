@@ -1,21 +1,19 @@
-# SISTEMA DE VENDA DE INGRESSOS 
-SISTEMAS IMPLEMENTADOS NO SITE:
-  LOGIN
-  CADASTRO
-  COMPRA
-  PAINEL DE ADMINISTRACAO PARA ADICIONAR E REMOVER EVENTOS
-  SISTEMA DE TOKEN PARA VALIDACAO
-  API DO FIREBASE
-  SISTEMA DE GEO-LOCALIZACAO
+# Sistema de Venda de Ingressos
 
-TECNOLOGIAS FRONT-END:
-  REACT.JS
-  JAVASCRIPT
-  CSS COM STYLEDCOMPONENTS
+## Sistemas implementados no site:
+- **Login**
+- **Cadastro**
+- **Compra**
+- **Painel de Administração:** Permite adicionar e remover eventos.
+- **Sistema de Token:** Para validação.
+- **API do Firebase**
+- **Sistema de Geo-localização**
 
-TECNOLOGIAS BACK-END
-  FIREBASE PARA CONFIGURACAO DE BANCO DE DADOS
-  NODE.JS
+## Tecnologias Front-end:
+- **React.js**
+- **JavaScript**
+- **CSS com Styled-components**
 
-
-
+## Tecnologias Back-end:
+- **Firebase:** Para configuração de banco de dados.
+- **Node.js**
