@@ -28,7 +28,7 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled.a`
-font-family: 'Oswald';
+font-family: 'Arial';
   color: white;
   font-size: 1.2rem;
   margin-right: 15px;
