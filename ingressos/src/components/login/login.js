@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../index';
+import Header from '../../components/header/header'
 
-import { LoginContainer, LoginForm, Input, LoginButton, Popup } from './style';
+import { LoginContainer, LoginForm, Input, LoginButton, Popup, Container } from './style';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -30,39 +31,42 @@ function Login() {
   };
 
   return (
-    <LoginContainer>
-      <LoginForm onSubmit={handleLogin}>
-        <Input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <Input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <LoginButton type="submit">Login</LoginButton>
-      </LoginForm>
-      {loginSuccess && (
-        <Popup>
-          <p>Login realizado com sucesso!</p>
-          <button onClick={closePopup}>Fechar</button>
-          {/* Aqui você pode adicionar o conteúdo do popup de login bem-sucedido */}
-        </Popup>
-      )}
-      {loginError && (
-        <Popup>
-          <p>Usuário ou senha inválidos</p>
-          <button onClick={closePopup}>Fechar</button>
-          {/* Aqui você pode adicionar o conteúdo do popup de login falhado */}
-        </Popup>
-      )}
-    </LoginContainer>
+    <Container>
+      <Header></Header>
+      <LoginContainer>
+        <LoginForm onSubmit={handleLogin}>
+          <Input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+          />
+          <Input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <LoginButton type="submit">Login</LoginButton>
+        </LoginForm>
+        {loginSuccess && (
+          <Popup>
+            <p>Login realizado com sucesso!</p>
+            <button onClick={closePopup}>Fechar</button>
+            {/* Aqui você pode adicionar o conteúdo do popup de login bem-sucedido */}
+          </Popup>
+        )}
+        {loginError && (
+          <Popup>
+            <p>Usuário ou senha inválidos</p>
+            <button onClick={closePopup}>Fechar</button>
+            {/* Aqui você pode adicionar o conteúdo do popup de login falhado */}
+          </Popup>
+        )}
+      </LoginContainer>
+    </Container>
   );
 }
 

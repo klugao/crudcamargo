@@ -52,3 +52,10 @@ export const Popup = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 `;
+
+export const Container = styled.div`
+margin: 0px;
+padding: 0px;
+width: 100%;
+height: 100%;
+`;

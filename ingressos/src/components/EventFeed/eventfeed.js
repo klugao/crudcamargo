@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
-import {Container,Publicacao} from './style'
+import React, { useState, useEffect } from 'react';
+import { db } from '../../index';
+import { collection, getDocs } from 'firebase/firestore';
+import Publicacao from './publicacao';
 
 
 function EventFeed() {
-  // Dados simulados para os eventos
-  const [events, setEvents] = useState([
-    { id: 1, name: 'Concerto de Rock', description: 'Venha curtir o melhor do rock nacional e internacional.' },
-    { id: 2, name: 'Peça de Teatro: A Revolução', description: 'Uma peça que irá desafiar suas percepções de sociedade.' },
-    { id: 3, name: 'Exposição de Arte Moderna', description: 'Explore obras contemporâneas de artistas renomados.' }
-  ]);
+  const [publicacoes, setPublicacoes] = useState([]);
+
+  useEffect(() => {
+    const fetchPublicacoes = async () => {
+      const publicacoesCol = collection(db, "Publicacoes");
+      const publicacoesSnapshot = await getDocs(publicacoesCol);
+      const publicacoesList = publicacoesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setPublicacoes(publicacoesList);
+    };
+
+    fetchPublicacoes();
+  }, []);
 
   return (
-    <Container>
-      {events.map(event => (
-        <Publicacao key={event.id} >
-          <h2>{event.name}</h2>
-          <p>{event.description}</p>
-          <button>Informações</button>
-        </Publicacao>
+    <div>
+      {publicacoes.map(pub => (
+        <Publicacao key={pub.id} titulo={pub.Titulo} descricao={pub.Descricao} local={pub.Local} valor={pub.Valor} />
       ))}
-    </Container>
+    </div>
   );
 }
 

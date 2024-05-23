@@ -1,15 +1,21 @@
+// Importar as funções necessárias do pacote Firebase
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+
+// Configuração do Firebase
 const firebaseConfig = {
-    apiKey: "sua-api-key",
-    authDomain: "seu-auth-domain",
-    projectId: "seu-project-id",
-    storageBucket: "seu-storage-bucket",
-    messagingSenderId: "seu-messaging-sender-id",
-    appId: "seu-app-id"
-  };
-  
-  // Inicializa o Firebase
-  firebase.initializeApp(firebaseConfig);
-  
-  // Inicializa o Firestore
-  const db = firebase.firestore();
-  
+  apiKey: "AIzaSyC0BHymfuxwJsZ7PasKfVKaw8vKC4u4oiY",
+  authDomain: "ingressos-a1eaa.firebaseapp.com",
+  projectId: "ingressos-a1eaa",
+  storageBucket: "ingressos-a1eaa.appspot.com",
+  messagingSenderId: "1046185211598",
+  appId: "1:1046185211598:web:33396240945c805d9d429f"
+};
+
+// Inicializar o Firebase
+const app = initializeApp(firebaseConfig);
+
+// Inicializar o Firestore
+const db = getFirestore(app);
+
+export { db };
