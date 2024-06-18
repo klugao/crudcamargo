@@ -1,18 +1,18 @@
 import React from 'react';
 import { Container, Conteudo } from './style';
-import EventFeed from '../EventFeed/eventfeed';
+import Header from '../header/header'
 
-function Main() {
+function Account() {
   return (
     <Container>
+      <Header></Header>
         <Conteudo>
           <div>
-            <h1>Feed de Eventos</h1>
-            <EventFeed/>
+            <h1>Minha conta</h1>
           </div>
         </Conteudo>
     </Container>
   );
 }
 
-export default Main;
+export default Account;

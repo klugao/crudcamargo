@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import * as firebaseAuth from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import 'firebase/app'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -23,11 +23,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
 
-export const auth = firebaseAuth.initializeAuth(app);
-firebaseAuth.signInWithEmailAndPassword(
-  auth, 'renaniomes10@gmail.com', 'renan123'
-).then(user => console.log(user)).catch(error => console.log('error',error));
+// export const auth = firebaseAuth.initializeAuth(app);
+// firebaseAuth.signInWithEmailAndPassword(
+//   auth, 'renaniomes10@gmail.com', 'renan123'
+// ).then(user => console.log(user)).catch(error => console.log('error',error));
+
+export const auth = getAuth(app);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
