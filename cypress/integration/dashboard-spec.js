@@ -1,8 +1,8 @@
 /// <reference types="Cypress" />
 
-describe("Tela login", function () {
+describe("Dashboard", function () {
     beforeEach(function () {
-      cy.visit("http://localhost:3000/");
+      cy.visit("./src/components/main/main.js");
     });
   
     it("verifica o título da aplicação", function () {

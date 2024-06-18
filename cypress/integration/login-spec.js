@@ -2,7 +2,7 @@
 
 describe("Tela login", function () {
   beforeEach(function () {
-    cy.visit("http://localhost:3000/login");
+    cy.visit("./src/components/login/login.js");
   });
 
   it("verifica o título da aplicação", function () {
