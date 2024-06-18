@@ -40,3 +40,22 @@ export const LoginButton = styled.button`
     background-color: #00408b;
   }
 `;
+
+export const Popup = styled.div`
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+`;
+
+export const Container = styled.div`
+margin: 0px;
+padding: 0px;
+width: 100%;
+height: 100%;
+`;

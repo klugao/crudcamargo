@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     width: 100%;
-
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
 `;
 export const Publicacao = styled.div`
     margin: 30px 0px;
