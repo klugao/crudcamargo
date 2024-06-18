@@ -13,7 +13,7 @@ describe("Tela login", function () {
     cy.get('[type="email"]').type("renaniomes10@gmail.com");
     cy.get('[type="password"]').type("renan123");
     cy.get('button[type="submit"]').click();
-    cy.contains("p", "Login realizado com sucesso!").should("be.visible");
+    cy.contains('Feed de Eventos');
   });
 
   it("retorna erro ao preencher os campos obrigatórios e envia o formulário", function () {
