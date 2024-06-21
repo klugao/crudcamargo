@@ -24,6 +24,7 @@ function EventFeed() {
           key={pub.id}
           titulo={pub.Titulo}
           descricao={pub.Descricao}
+          data={pub.Data}
           local={pub.Local}
           valor={pub.Valor}
           imageUrl={pub.ImageUrl} // Passando a URL da imagem

@@ -2,7 +2,7 @@
 
 describe("Tela login", function () {
   beforeEach(function () {
-    cy.visit("http://localhost:3000/login");
+    cy.visit("login");
   });
 
   it("verifica o título da aplicação", function () {
@@ -13,7 +13,7 @@ describe("Tela login", function () {
     cy.get('[type="email"]').type("renaniomes10@gmail.com");
     cy.get('[type="password"]').type("renan123");
     cy.get('button[type="submit"]').click();
-    cy.contains("p", "Login realizado com sucesso!").should("be.visible");
+    cy.contains("Perfil").should("be.visible");
   });
 
   it("retorna erro ao preencher os campos obrigatórios e envia o formulário", function () {

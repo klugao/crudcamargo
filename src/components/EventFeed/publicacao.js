@@ -1,10 +1,21 @@
-import React from "react";
-import { Container } from './style';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container } from './style'; // Verifique o caminho
 
-function Publicacao({ titulo, descricao, local, valor, imageUrl }) {
+function Publicacao({ id, titulo, descricao, data, local, valor, imageUrl }) {
+  const [quantidade, setQuantidade] = useState(1);
+  const navigate = useNavigate();
+
+  const handleQuantidadeChange = (e) => {
+    setQuantidade(Number(e.target.value));
+  };
+
+  const handleComprarClick = () => {
+    navigate(`/pagamento/${id}`, { state: { quantidade, total: quantidade * valor } });
+  };
+
   return (
     <Container>
-
       <div className="box-img">
         <img src={imageUrl} alt="Publicação" />
       </div>
@@ -16,12 +27,25 @@ function Publicacao({ titulo, descricao, local, valor, imageUrl }) {
         </div>
 
         <div className="infos">
-          <p>Local: <strong>{`${local}`}</strong></p>
+          <p>Data: <strong>{data}</strong></p>
+          <p>Local: <strong>{local}</strong></p>
           <p className="preco">{`Valor: R$ ${valor.toFixed(2)}`}</p>
-          <button>Ver mais</button>
+          <br></br>
+          <br></br>
+          <div className="quantidade">
+            <label htmlFor="quantidade">Quantidade:</label>
+            <input
+              type="number"
+              id="quantidade"
+              min="1"
+              value={quantidade}
+              onChange={handleQuantidadeChange}
+            />
+            <p>Total: R$ {(quantidade * valor).toFixed(2)}</p>
+          </div>
+          <button onClick={handleComprarClick}>Comprar</button>
         </div>
       </div>
-      
     </Container>
   );
 }
