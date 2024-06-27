@@ -39,6 +39,7 @@ function Header() {
         <NavLink href="/">Home</NavLink>
         <NavLink href="/contato">Contato</NavLink>
         <NavLink href="/sobre">Sobre</NavLink>
+        <NavLink href="/register">Register</NavLink>
         {user ? (
           <>
             <NavLink href="/perfil">{user.displayName || "Perfil"}</NavLink>
