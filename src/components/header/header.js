@@ -36,18 +36,25 @@ function Header() {
         <h1>EasyTickets.com</h1>
       </LogoLink>
       <Nav>
-        <NavLink href="/">Home</NavLink>
+        <NavLink href="/">Início</NavLink>
         <NavLink href="/contato">Contato</NavLink>
         <NavLink href="/sobre">Sobre</NavLink>
-        <NavLink href="/register">Register</NavLink>
         {user ? (
           <>
             <NavLink href="/perfil">{user.displayName || "Perfil"}</NavLink>
-            <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+            <LogoutButton onClick={handleLogout}>Sair</LogoutButton>
           </>
         ) : (
           <NavLink href="/login">Login</NavLink>
         )}
+
+        {user ? (
+          <>
+          </>
+        ) : (
+          <NavLink href="/register">Cadastro</NavLink>
+        )}
+
       </Nav>
     </HeaderContainer>
   );
