@@ -52,7 +52,7 @@ function Header() {
           <>
           </>
         ) : (
-          <NavLink href="/register">Cadastro</NavLink>
+          <NavLink href="/register">Cadastro.</NavLink>
         )}
 
       </Nav>
