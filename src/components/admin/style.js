@@ -90,7 +90,6 @@ export const ListItem = styled.div`
 `;
 
 export const CreateButton = styled.button`
-  position: fixed;
   top: 20px;
   left: 20px;
   padding: 10px 20px;

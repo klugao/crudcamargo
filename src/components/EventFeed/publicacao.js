@@ -11,7 +11,18 @@ function Publicacao({ id, titulo, descricao, data, local, valor, imageUrl }) {
   };
 
   const handleComprarClick = () => {
-    navigate(`/pagamento/${id}`, { state: { quantidade, total: quantidade * valor } });
+    navigate(`/pagamento/${id}`, {
+      state: {
+        id: id || '',
+        titulo: titulo || '',
+        descricao: descricao || '',
+        data: data || '',
+        local: local || '',
+        valor: valor || 0,
+        quantidade: quantidade || 1,
+        total: quantidade * valor || 0
+      }
+    });
   };
 
   return (

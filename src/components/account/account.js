@@ -3,38 +3,29 @@ import { Link } from 'react-router-dom';
 import { Container, Conteudo, EditButton, Form, Input, Label, SaveButton, AdminButton } from './style';
 import Header from '../header/header';
 import { useAuth } from '../../contexts/AuthContext';
-import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 
 function Account() {
   const { currentUser } = useAuth();
   const [compras, setCompras] = useState([]);
-  const [userInfo, setUserInfo] = useState({ name: '', birthDate: '', address: '', cpf: '' });
+  const [userInfo, setUserInfo] = useState({ Nome: '', Nascimento: '', Endereco: '', Cpf: '', Compras: [], userId: '' });
   const [editMode, setEditMode] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchUserInfo = async () => {
-  //     if (currentUser) {
-  //       const docRef = doc(db, 'users', currentUser.uid);
-  //       const docSnap = await getDoc(docRef);
-  //       if (docSnap.exists()) {
-  //         setUserInfo(docSnap.data());
-  //       }
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (currentUser) {
+        const docRef = doc(db, 'users', currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setUserInfo(docSnap.data());
+          setCompras(docSnap.data().Compras || []);
+        }
+      }
+    };
 
-  //   const fetchCompras = async () => {
-  //     if (currentUser) {
-  //       const q = query(collection(db, 'compras'), where('userId', '==', currentUser.uid));
-  //       const querySnapshot = await getDocs(q);
-  //       const comprasList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  //       setCompras(comprasList);
-  //     }
-  //   };
-
-  //   fetchUserInfo();
-  //   fetchCompras();
-  // }, [currentUser]);
+    fetchUserInfo();
+  }, [currentUser]);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -48,13 +39,21 @@ function Account() {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const docRef = doc(db, 'users', currentUser.uid);
-      await updateDoc(docRef, userInfo);
+      const userId = currentUser.uid;
+      const updatedUserInfo = {
+        ...userInfo,
+        Cpf: Number(userInfo.Cpf),
+        userId: userId,
+      };
+      console.log("Current User ID:", userId);
+      console.log("User Info to Save:", updatedUserInfo);
+      const docRef = doc(db, 'users', userId);
+      await setDoc(docRef, updatedUserInfo);
       setEditMode(false);
       alert('Informações atualizadas com sucesso!');
     } catch (error) {
-      console.error('Erro ao atualizar informações: ', error);
-      alert('Erro ao atualizar informações. Tente novamente.');
+      console.error('Erro ao atualizar informações: ', error.message);
+      alert(`Erro ao atualizar informações. Tente novamente. Erro: ${error.message}`);
     }
   };
 
@@ -67,28 +66,28 @@ function Account() {
           <Form onSubmit={handleSave}>
             <Label>
               Nome:
-              <Input type="text" name="name" value={userInfo.name} onChange={handleChange} required />
+              <Input type="text" name="Nome" value={userInfo.Nome} onChange={handleChange} required />
             </Label>
             <Label>
               Data de Nascimento:
-              <Input type="date" name="birthDate" value={userInfo.birthDate} onChange={handleChange} required />
+              <Input type="date" name="Nascimento" value={userInfo.Nascimento} onChange={handleChange} required />
             </Label>
             <Label>
               Endereço:
-              <Input type="text" name="address" value={userInfo.address} onChange={handleChange} required />
+              <Input type="text" name="Endereco" value={userInfo.Endereco} onChange={handleChange} required />
             </Label>
             <Label>
               CPF:
-              <Input type="text" name="cpf" value={userInfo.cpf} onChange={handleChange} required />
+              <Input type="text" name="Cpf" value={userInfo.Cpf} onChange={handleChange} required />
             </Label>
             <SaveButton type="submit">Salvar</SaveButton>
           </Form>
         ) : (
           <>
-            <p><strong>Nome:</strong> {userInfo.name}</p>
-            <p><strong>Data de Nascimento:</strong> {userInfo.birthDate}</p>
-            <p><strong>Endereço:</strong> {userInfo.address}</p>
-            <p><strong>CPF:</strong> {userInfo.cpf}</p>
+            <p><strong>Nome:</strong> {userInfo.Nome}</p>
+            <p><strong>Data de Nascimento:</strong> {userInfo.Nascimento}</p>
+            <p><strong>Endereço:</strong> {userInfo.Endereco}</p>
+            <p><strong>CPF:</strong> {userInfo.Cpf}</p>
             <EditButton onClick={handleEdit}>Editar Informações</EditButton>
           </>
         )}
@@ -100,12 +99,13 @@ function Account() {
           <p>Você não possui ingressos comprados.</p>
         ) : (
           <ul>
-            {compras.map(compra => (
-              <li key={compra.id}>
+            {compras.map((compra, index) => (
+              <li key={index}>
+                <p>Título: {compra.titulo}</p>
                 <p>Quantidade: {compra.quantidade}</p>
                 <p>Total: R$ {compra.total.toFixed(2)}</p>
-                <p>Método de Pagamento: {compra.paymentMethod}</p>
-                <p>Data da Compra: {new Date(compra.timestamp.seconds * 1000).toLocaleDateString()}</p>
+                <p>Data: {new Date(compra.data).toLocaleDateString()}</p>
+                <p>Local: {compra.local}</p>
               </li>
             ))}
           </ul>

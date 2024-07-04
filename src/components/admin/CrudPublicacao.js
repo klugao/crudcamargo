@@ -4,6 +4,7 @@ import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from 'firebase
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Form, Label, Input, TextArea, Button, List, ListItem, CreateButton } from './style'; // Verifique o caminho
 import Publicacao from '../EventFeed/publicacao'; // Ajuste o caminho conforme necessário
+import Header from '../../components/header/header'
 
 function Publicacoes() {
   const [titulo, setTitulo] = useState('');
@@ -114,6 +115,8 @@ function Publicacoes() {
 
   return (
     <div>
+
+      <Header></Header>
       <CreateButton onClick={handleCreateClick}>Criar Publicação</CreateButton>
       
       {formVisible && (

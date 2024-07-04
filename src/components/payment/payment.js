@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import Header from '../../components/header/header'
-import { useLocation } from "react-router-dom";
-import { Container, Conteudo, Button, PaymentForm, RadioGroup, RadioLabel, Input, QRCodeContainer, CardDetailsForm } from './style'; // Certifique-se de que o caminho está correto
+import Header from '../../components/header/header';
+import { useLocation, useNavigate } from "react-router-dom";
+import { Container, Conteudo, Button, PaymentForm, RadioGroup, RadioLabel, Input, QRCodeContainer, CardDetailsForm } from './style';
 import QRCode from 'qrcode.react';
+import { useAuth } from '../../contexts/AuthContext';
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { db } from '../../firebase-config';
 
 function Payment() {
   const location = useLocation();
-  const { quantidade, total } = location.state;
+  const { id, titulo, descricao, data, local, valor, quantidade, total } = location.state;
   const [paymentMethod, setPaymentMethod] = useState('');
   const [showQRCode, setShowQRCode] = useState(false);
   const [qrCodeValue, setQrCodeValue] = useState('');
   const [cardDetails, setCardDetails] = useState({ cardNumber: '', cardHolder: '', expiryDate: '', cvv: '' });
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -26,14 +31,45 @@ function Payment() {
     setCardDetails({ ...cardDetails, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Lógica de processamento de pagamento aqui
-    alert(`Pagamento realizado com ${paymentMethod}`);
+    try {
+      if (currentUser) {
+        const userId = currentUser.uid;
+        const compra = {
+          id: id || '',
+          titulo: titulo || '',
+          descricao: descricao || '',
+          data: data || '',
+          local: local || '',
+          valor: valor || 0,
+          quantidade: quantidade || 1,
+          total: total || 0,
+          paymentMethod: paymentMethod || '',
+          timestamp: new Date().toISOString()
+        };
+
+        console.log("Compra:", compra); // Adicionar log para verificar os valores
+
+        const docRef = doc(db, 'users', userId);
+        await updateDoc(docRef, {
+          Compras: arrayUnion(compra)
+        });
+
+        alert(`Pagamento realizado com ${paymentMethod}`);
+        navigate('/'); // Navegar para a página de conta do usuário
+      } else {
+        alert('Usuário não autenticado');
+      }
+    } catch (error) {
+      console.error('Erro ao registrar compra: ', error.message);
+      alert(`Erro ao registrar compra. Tente novamente. Erro: ${error.message}`);
+    }
   };
 
   return (
     <Container>
+      <Header />
       <Conteudo>
         <h1>Pagamento</h1>
         <p>Quantidade de ingressos: {quantidade}</p>
